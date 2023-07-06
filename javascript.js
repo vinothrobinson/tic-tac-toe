@@ -1,22 +1,37 @@
 const gameBoard = (() => {
     let gameArray = ["", "", "", "", "", "", "", "", ""];
-    const grids = document.getElementsByClassName("grid");
-    for (grid of grids) {
-        grid.addEventListener("click", function() {
-            console.log(grid.innerHTML)
-        })
+
+    const resetGameBoard = () => {
+        gameArray = ["", "", "", "", "", "", "", "", ""];
     }
 
-    const resetGameBoard = (() => {
-        gameArray = ["", "", "", "", "", "", "", "", ""];
-    })
+    const renderBoard = () => {
+        let boardHTML = ""
+        gameArray.forEach((square, index) => {
+            boardHTML += `<div class="grid" id="${index}">${square}</div>`
+        })
+        document.querySelector(".game-board").innerHTML = boardHTML;
+        const grids = document.getElementsByClassName("grid");
+        for (grid of grids) {
+            grid.addEventListener("click", playGame.gridSelected);
+        }
+    }
 
-    const renderBoard = (() => {
-        let boardSymbol = ""
+    const update = (index, mark) => {
+        if (gameArray[index] === "") {
+            gameArray[index] = mark;
+            this.removeEventListener("click", playGame.gridSelected)
+        }
+        renderBoard();
+        playGame.swapPlayer(mark);
+    }
 
-    })
+    const checkWin = () => {
 
-    return {resetGameBoard, renderBoard}
+    }
+
+
+    return {resetGameBoard, renderBoard, update, checkWin}
 })();
 
 const createPlayer = ((name, mark) => {
@@ -37,10 +52,22 @@ const playGame = (() => {
         currentPlayer = 0;
         gameOver = false;
         board.style.display = "grid";
-        console.log("This runs!")
+        gameBoard.renderBoard();
     }
 
-    return {startGame}
+    const gridSelected = (event) => {
+        let index = parseInt(event.target.id);
+        gameBoard.update(index, players[currentPlayer].mark)
+    }
+
+    const swapPlayer = (mark) => {
+        if (mark === "X") {
+            currentPlayer = 1;
+        }
+        else currentPlayer = 0;
+    }
+
+    return {startGame, gridSelected, swapPlayer}
 })();
 
 const startButton = document.querySelector(".start")
