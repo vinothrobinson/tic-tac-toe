@@ -1,0 +1,23 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    background-color: #86efac;
+}
+
+.game-board {
+    width: 75vh;
+    height: 75vh;
+    display: grid;
+    margin: auto;
+    margin-top: 100px;
+    background-color: #a7f3d0;
+    grid-template-columns: repeat(3, 33.3%);
+    grid-template-rows: repeat(3, 33.3%);
+}
+
+.grid {
+    border: solid black 1px;
+}
