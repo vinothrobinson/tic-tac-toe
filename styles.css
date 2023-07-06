@@ -20,4 +20,7 @@ body {
 
 .grid {
     border: solid black 1px;
+    text-align: center;
+    font-size: 10.0rem;
+    font-family: "Roboto"
 }
