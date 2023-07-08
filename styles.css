@@ -62,6 +62,10 @@ body {
     width: 20vh;
 }
 
+.playerName {
+    font-family: "Roboto";
+}
+
 .restart-button {
     text-align: center;
     width: 10vw;
