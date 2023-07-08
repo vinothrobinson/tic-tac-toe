@@ -16,17 +16,12 @@ const gameBoard = (() => {
     const update = (index, mark) => {
         gameArray[index] = mark;
         renderBoard();
-        playGame.swapPlayer(mark);
     }
 
     const getGameboard = () => gameArray;
 
-    const checkWin = () => {
 
-    }
-
-
-    return {renderBoard, update, checkWin, getGameboard}
+    return {renderBoard, update, getGameboard}
 })();
 
 const createPlayer = ((name, mark) => {
@@ -41,7 +36,7 @@ const playGame = (() => {
     let restartButton = document.querySelector(".restart-button")
 
     const startGame = () => {
-        players = [
+        playerList = [
             createPlayer("Player One", "X"),
             createPlayer("Player Two", "O")
         ]
@@ -55,16 +50,10 @@ const playGame = (() => {
     const gridSelected = (event) => {
         let index = parseInt(event.target.id);
         if (gameBoard.getGameboard()[index] === "") {
-            gameBoard.update(index, players[currentPlayer].mark)
+            gameBoard.update(index, playerList[currentPlayer].mark)
+            currentPlayer = currentPlayer === 0 ? 1 : 0;
         }
         return
-    }
-
-    const swapPlayer = (mark) => {
-        if (mark === "X") {
-            currentPlayer = 1;
-        }
-        else currentPlayer = 0;
     }
 
     const restartGame = () => {
@@ -74,7 +63,11 @@ const playGame = (() => {
         startGame()
     }
 
-    return {startGame, gridSelected, swapPlayer, restartGame}
+    const checkWin = () => {
+
+    }
+
+    return {startGame, gridSelected, restartGame}
 })();
 
 const startButton = document.querySelector(".start")
