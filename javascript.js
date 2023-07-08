@@ -34,7 +34,6 @@ const playGame = (() => {
     let gameOver;
     let board = document.querySelector(".game-board");
     let restartButton = document.querySelector(".restart-button");
-    let winningPlayer = document.querySelector(".winner");
 
     const startGame = () => {
         playerList = [
@@ -55,11 +54,11 @@ const playGame = (() => {
             gameBoard.update(index, playerList[currentPlayer].mark)
             if (checkWin(gameBoard.getGameboard(), playerList[currentPlayer].mark)) {
                 gameOver = true;
-                winningPlayer.innerHTML = `${playerList[currentPlayer].name} has won!`
+                displayController.renderMessage(`${playerList[currentPlayer].name} has won!`);
             }
             else if(checkTie(gameBoard.getGameboard())) {
                 gameOver = true;
-                winningPlayer.innerHTML = "You have tied!"
+                displayController.renderMessage("You have tied!")
             }
             currentPlayer = currentPlayer === 0 ? 1 : 0;
         }
@@ -70,11 +69,18 @@ const playGame = (() => {
         for (let grid = 0; grid < 9; grid++) {
             gameBoard.update(grid, "")
         }
-        winningPlayer.innerHTML = ""
+        displayController.renderMessage("");
         startGame()
     }
 
     return {startGame, gridSelected, restartGame}
+})();
+
+const displayController = (() => {
+    const renderMessage = (message) => {
+        document.querySelector(".message").innerHTML = message;
+    }
+    return {renderMessage}
 })();
 
 function checkWin(board) {
