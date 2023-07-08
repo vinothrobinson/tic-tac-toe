@@ -122,13 +122,51 @@ function checkTie(board) {
 }
 
 // These two batches of code are used to enable a function when the button is clicked
+const startScreen = document.querySelector(".game-start")
 const startButton = document.querySelector(".start")
 startButton.addEventListener("click", () => {
     playGame.startGame()
-    startButton.style.display = "none"
+    startScreen.style.display = "none"
 })
 
 const restartButton = document.querySelector(".restart-button")
 restartButton.addEventListener("click", () => {
     playGame.restartGame()
+})
+
+
+const p1Selector = document.querySelector("#p1Type")
+const p1h = document.querySelector(".p1h");
+const p1c = document.querySelector(".p1c");
+p1Selector.addEventListener("change", (event)  => {
+    event.preventDefault();
+    console.log(event.target.value)
+    if (event.target.value === "human") {
+        console.log("if statement")
+        p1h.style.display = "block"
+        p1c.style.display = "none"
+    }
+    else {
+        console.log("else statement")
+        p1h.style.display = "none"
+        p1c.style.display = "block"
+    }
+})
+
+const p2Selector = document.querySelector("#p2Type")
+const p2h = document.querySelector(".p2h");
+const p2c = document.querySelector(".p2c");
+p2Selector.addEventListener("change", (event)  => {
+    event.preventDefault();
+    console.log(event.target.value)
+    if (event.target.value === "human") {
+        console.log("if statement")
+        p2h.style.display = "block"
+        p2c.style.display = "none"
+    }
+    else {
+        console.log("else statement")
+        p2h.style.display = "none"
+        p2c.style.display = "block"
+    }
 })
