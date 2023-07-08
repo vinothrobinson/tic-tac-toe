@@ -1,6 +1,8 @@
+// The gameBoard module contains the methods that are associated with the board itself
 const gameBoard = (() => {
     let gameArray = ["", "", "", "", "", "", "", "", ""];
 
+    // This function is used to render the game board and add the eventListener for clicking the grid squares
     const renderBoard = () => {
         let boardHTML = ""
         gameArray.forEach((square, index) => {
@@ -13,21 +15,24 @@ const gameBoard = (() => {
         }
     }
 
+    // This function updates a grid of the board with the player's symbol if clicked it
     const update = (index, mark) => {
         gameArray[index] = mark;
         renderBoard();
     }
 
+    // This function returns the game board, preventing the user from directly accessing it
     const getGameboard = () => gameArray;
-
 
     return {renderBoard, update, getGameboard}
 })();
 
+// The createPlayer factory is used to create players
 const createPlayer = ((name, mark) => {
     return {name, mark}
 })
 
+// The playGame module contains the methods related to playing the game
 const playGame = (() => {
     let playerList = [];
     let currentPlayer;
@@ -35,6 +40,7 @@ const playGame = (() => {
     let board = document.querySelector(".game-board");
     let restartButton = document.querySelector(".restart-button");
 
+    // This function is used to start the game
     const startGame = () => {
         playerList = [
             createPlayer("Player One", "X"),
@@ -47,6 +53,7 @@ const playGame = (() => {
         gameBoard.renderBoard();
     }
 
+    // This function is used to make moves and checks if moves are legal. It also checks win conditions
     const gridSelected = (event) => {
         let index = parseInt(event.target.id);
         if (gameOver) return;
@@ -65,6 +72,7 @@ const playGame = (() => {
         return
     }
 
+    // This function is used to reset and clear the board and start a brand new game
     const restartGame = () => {
         for (let grid = 0; grid < 9; grid++) {
             gameBoard.update(grid, "")
@@ -76,6 +84,7 @@ const playGame = (() => {
     return {startGame, gridSelected, restartGame}
 })();
 
+// The displayController module is used to display messages after the game ends
 const displayController = (() => {
     const renderMessage = (message) => {
         document.querySelector(".message").innerHTML = message;
@@ -83,6 +92,7 @@ const displayController = (() => {
     return {renderMessage}
 })();
 
+// This function is used to check wins
 function checkWin(board) {
     let winConditions = [
         // Horizontal Cases
@@ -100,16 +110,18 @@ function checkWin(board) {
     for (let i = 0; i < winConditions.length; i++) {
         const [a, b, c] = winConditions[i];
         if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-            return true
+            return true // Checks if the symbols are the same in all three spots
         }
     }
     return false;
 }
 
+// This function is used to check ties
 function checkTie(board) {
-    return board.every(cell => cell !== "");
+    return board.every(cell => cell !== ""); // Checks every grid to see if there are no empty squares
 }
 
+// These two batches of code are used to enable a function when the button is clicked
 const startButton = document.querySelector(".start")
 startButton.addEventListener("click", () => {
     playGame.startGame()
