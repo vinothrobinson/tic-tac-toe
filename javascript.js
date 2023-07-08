@@ -32,8 +32,9 @@ const playGame = (() => {
     let playerList = [];
     let currentPlayer;
     let gameOver;
-    let board = document.querySelector(".game-board")
-    let restartButton = document.querySelector(".restart-button")
+    let board = document.querySelector(".game-board");
+    let restartButton = document.querySelector(".restart-button");
+    let winningPlayer = document.querySelector(".winner");
 
     const startGame = () => {
         playerList = [
@@ -49,8 +50,17 @@ const playGame = (() => {
 
     const gridSelected = (event) => {
         let index = parseInt(event.target.id);
+        if (gameOver) return;
         if (gameBoard.getGameboard()[index] === "") {
             gameBoard.update(index, playerList[currentPlayer].mark)
+            if (checkWin(gameBoard.getGameboard(), playerList[currentPlayer].mark)) {
+                gameOver = true;
+                winningPlayer.innerHTML = `${playerList[currentPlayer].name} has won!`
+            }
+            else if(checkTie(gameBoard.getGameboard())) {
+                gameOver = true;
+                winningPlayer.innerHTML = "You have tied!"
+            }
             currentPlayer = currentPlayer === 0 ? 1 : 0;
         }
         return
@@ -60,15 +70,39 @@ const playGame = (() => {
         for (let grid = 0; grid < 9; grid++) {
             gameBoard.update(grid, "")
         }
+        winningPlayer.innerHTML = ""
         startGame()
-    }
-
-    const checkWin = () => {
-
     }
 
     return {startGame, gridSelected, restartGame}
 })();
+
+function checkWin(board) {
+    let winConditions = [
+        // Horizontal Cases
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        // Vertical Cases
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        // Diagonal Cases
+        [0, 4, 8],
+        [2, 4, 6]
+    ]
+    for (let i = 0; i < winConditions.length; i++) {
+        const [a, b, c] = winConditions[i];
+        if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+            return true
+        }
+    }
+    return false;
+}
+
+function checkTie(board) {
+    return board.every(cell => cell !== "");
+}
 
 const startButton = document.querySelector(".start")
 startButton.addEventListener("click", () => {
