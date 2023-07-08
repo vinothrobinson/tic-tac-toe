@@ -1,10 +1,6 @@
 const gameBoard = (() => {
     let gameArray = ["", "", "", "", "", "", "", "", ""];
 
-    const resetGameBoard = () => {
-        gameArray = ["", "", "", "", "", "", "", "", ""];
-    }
-
     const renderBoard = () => {
         let boardHTML = ""
         gameArray.forEach((square, index) => {
@@ -18,20 +14,19 @@ const gameBoard = (() => {
     }
 
     const update = (index, mark) => {
-        if (gameArray[index] === "") {
-            gameArray[index] = mark;
-            this.removeEventListener("click", playGame.gridSelected)
-        }
+        gameArray[index] = mark;
         renderBoard();
         playGame.swapPlayer(mark);
     }
+
+    const getGameboard = () => gameArray;
 
     const checkWin = () => {
 
     }
 
 
-    return {resetGameBoard, renderBoard, update, checkWin}
+    return {renderBoard, update, checkWin, getGameboard}
 })();
 
 const createPlayer = ((name, mark) => {
@@ -43,6 +38,7 @@ const playGame = (() => {
     let currentPlayer;
     let gameOver;
     let board = document.querySelector(".game-board")
+    let restartButton = document.querySelector(".restart-button")
 
     const startGame = () => {
         players = [
@@ -52,12 +48,16 @@ const playGame = (() => {
         currentPlayer = 0;
         gameOver = false;
         board.style.display = "grid";
+        restartButton.style.display = "inline-block";
         gameBoard.renderBoard();
     }
 
     const gridSelected = (event) => {
         let index = parseInt(event.target.id);
-        gameBoard.update(index, players[currentPlayer].mark)
+        if (gameBoard.getGameboard()[index] === "") {
+            gameBoard.update(index, players[currentPlayer].mark)
+        }
+        return
     }
 
     const swapPlayer = (mark) => {
@@ -67,11 +67,23 @@ const playGame = (() => {
         else currentPlayer = 0;
     }
 
-    return {startGame, gridSelected, swapPlayer}
+    const restartGame = () => {
+        for (let grid = 0; grid < 9; grid++) {
+            gameBoard.update(grid, "")
+        }
+        startGame()
+    }
+
+    return {startGame, gridSelected, swapPlayer, restartGame}
 })();
 
 const startButton = document.querySelector(".start")
 startButton.addEventListener("click", () => {
     playGame.startGame()
     startButton.style.display = "none"
+})
+
+const restartButton = document.querySelector(".restart-button")
+restartButton.addEventListener("click", () => {
+    playGame.restartGame()
 })
