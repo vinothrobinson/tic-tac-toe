@@ -30,11 +30,36 @@ body {
     width: 20vw;
     height: 20vh;
     font-size: 2.0rem;
+    margin-top: 20vh;
 }
 
 .game-start {
     text-align: center;
-    margin-top: 40vh;
+    margin-top: 20vh;
+    display: flex;
+    justify-content: space-around;
+    height: 100vh
+}
+
+.playerSelector {
+    display: grid;
+    grid-template-rows: 20% 60% 20%;
+    background-color: #d1fae5;
+    height: 50vh;
+    width: 25vw;
+    border-radius: 15px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.playerType {
+    width: 10vw;
+    text-align: center;
+}
+
+.playerImg > img{
+    width: 20vh;
 }
 
 .restart-button {
