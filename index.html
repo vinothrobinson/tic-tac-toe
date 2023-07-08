@@ -13,7 +13,30 @@
     <div class="game-board" style="display: none"> </div>
     <button class="restart-button" style="display: none">Restart!</button>
     <div class="game-start">
+        <div id="playerOne" class="playerSelector">
+            <h1 class="playerName">Player One</h1>
+            <div class="playerImg">
+                <img class="p1h" src="https://www.freeiconspng.com/thumbs/human-icon-png/download-link-for-eps--svg-or-file--0.png"> 
+                <img class="p1c" src="https://cdn-icons-png.flaticon.com/512/3826/3826650.png" style="display: none">
+            </div>
+            <select id="p1Type" class="playerType" name="selector">
+                <option class="p1-type" value="human">Human</option>
+                <option class="p1-type" value="cpu">CPU</option>
+             </select>
+
+        </div>
         <button class="start">Start Game!</button>
+        <div id="playerTwo" class="playerSelector">
+            <h1 class="playerName">Player Two</h1>
+            <div class="playerImg">
+                <img class="p2h" src="https://www.freeiconspng.com/thumbs/human-icon-png/download-link-for-eps--svg-or-file--0.png"> 
+                <img class="p2c" src="https://cdn-icons-png.flaticon.com/512/3826/3826650.png" style="display: none">
+            </div>
+            <select id="p2Type" class="playerType" name="selector">
+               <option class="p2-type" value="human">Human</option>
+               <option class="p2-type" value="cpu">CPU</option>
+            </select>
+        </div>
     </div>
 </body>
 </html>
